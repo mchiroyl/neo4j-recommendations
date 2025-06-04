@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recomendaciones de Películas</title>
+</head>
+<body>
+    <h1>Recomendaciones de Películas</h1>
+
+    <h2>Buscar por Usuario</h2>
+    <form method="POST">
+        <label for="user_id">ID del Usuario:</label>
+        <input type="text" name="user_id" value="{{ user_id }}" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if user_recs %}
+        <h3>Recomendaciones para el usuario {{ user_id }}:</h3>
+        <ul>
+            {% for rec in user_recs %}
+                <li>
+                    {{ rec.title }}
+                    {% if rec.released %} ({{ rec.released }}) {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif user_id %}
+        <p>No se encontraron recomendaciones para el usuario {{ user_id }}.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Buscar por Película</h2>
+    <form method="POST">
+        <label for="movie_title">Título de la Película:</label>
+        <input type="text" name="movie_title" value="{{ movie_title }}" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if movie_recs %}
+        <h3>Películas similares a "{{ movie_title }}":</h3>
+        <ul>
+            {% for rec in movie_recs %}
+                <li>
+                    {{ rec.title }}
+                    {% if rec.released %} ({{ rec.released }}) {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% elif movie_title %}
+        <p>No se encontraron recomendaciones para la película "{{ movie_title }}".</p>
+    {% endif %}
+</body>
+</html>
